@@ -32,8 +32,13 @@ describe Oystercard do
   describe '#deduct' do
 
     it 'should deduct by a specified amount' do
-      expect { subject.deduct(2) }.to change{ subject.balance }.by -2
+      card = subject.top_up(10)
+      expect { card.deduct(2) }.to change{ card.balance }.by -2
     end
 
   end
+
+  it { is_expected.to respond_to (:in_use) }
+
+
 end
