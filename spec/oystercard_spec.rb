@@ -50,7 +50,7 @@ describe Oystercard do
 
   it { is_expected.to respond_to (:touch_in) }
 
-   describe '#touch_in' do
+  describe '#touch_in' do
 
      it 'should change in_use attribute to true when called' do
        expect(subject.touch_in.in_use).to eq true
@@ -58,5 +58,16 @@ describe Oystercard do
 
 
   end
+
+  it { is_expected.to respond_to (:touch_out) }
+
+  #  describe '#touch_in' do
+  #
+  #    it 'should change in_use attribute to true when called' do
+  #      expect(subject.touch_in.in_use).to eq true
+  #    end
+  #
+  #
+  # end
 
 end
