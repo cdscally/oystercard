@@ -30,6 +30,7 @@ class Oystercard
   end
 
   def in_journey?
+    @in_use
   end
 
 end

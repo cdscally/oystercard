@@ -60,7 +60,7 @@ describe Oystercard do
 
   it { is_expected.to respond_to (:touch_out) }
 
-   describe '#touch_out' do
+  describe '#touch_out' do
 
      it 'should change in_use attribute to false when called' do
        expect(subject.touch_in.touch_out.in_use).to eq false
@@ -69,5 +69,13 @@ describe Oystercard do
   end
 
   it { is_expected.to respond_to (:in_journey?) }
+
+  describe '#in_journey?' do
+
+    it 'should return true or false' do
+      expect([true, false].include? subject.in_journey?).to eq true
+    end
+
+  end
 
 end
