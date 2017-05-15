@@ -27,16 +27,8 @@ describe Oystercard do
     expect(!!Oystercard::MAX_BALANCE).to eq true
   end
 
-  it { is_expected.to respond_to(:deduct).with(1).argument }
-
-  describe '#deduct' do
-
-    it 'should deduct by a specified amount' do
-      card = subject.top_up(10)
-      expect { card.deduct(2) }.to change{ card.balance }.by -2
-    end
-
-  end
+  # since #deduct is a private method, we want to make sure that it cannot be called from outside
+  it { is_expected.not_to respond_to(:deduct) }
 
   it { is_expected.to respond_to (:in_journey?) }
 

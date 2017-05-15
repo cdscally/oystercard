@@ -16,11 +16,6 @@ class Oystercard
     self
   end
 
-  def deduct(fare)
-    @balance -= fare
-    self
-  end
-
   def touch_in
     fail "Balance below minimum fare. Please top-up." if balance < Fare::MIN_FARE
     @in_journey = true
@@ -35,6 +30,13 @@ class Oystercard
 
   def in_journey?
     @in_journey
+  end
+
+  private
+
+  def deduct(fare)
+    @balance -= fare
+    self
   end
 
 end
