@@ -25,8 +25,8 @@ class Oystercard
   end
 
   def touch_out
-    # @in_use = false
-    # self
+    @in_use = false
+    self
   end
 
 end
