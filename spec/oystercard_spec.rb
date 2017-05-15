@@ -40,5 +40,14 @@ describe Oystercard do
 
   it { is_expected.to respond_to (:in_use) }
 
+  describe '#in_use' do
+
+    it 'should return true or false' do
+      expect([true, false].include? subject.in_use).to eq true
+    end
+
+  end
+
+
 
 end

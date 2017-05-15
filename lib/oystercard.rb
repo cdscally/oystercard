@@ -5,6 +5,7 @@ class Oystercard
 
   def initialize
     @balance = 0
+    @in_use = false
   end
 
   def top_up(top_up_value)
