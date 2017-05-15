@@ -70,6 +70,10 @@ describe Oystercard do
        expect(subject.top_up(Fare::MIN_FARE).touch_in.touch_out.in_journey?).to eq false
      end
 
+     it 'should deduct the minimum fare' do
+       subject.top_up(Fare::MIN_FARE)
+       expect { subject.touch_in.touch_out }.to change{ subject.balance }.by -Fare::MIN_FARE
+     end
   end
 
   it { is_expected.to respond_to (:in_journey?) }
@@ -88,5 +92,7 @@ describe Oystercard do
     end
 
   end
+
+
 
 end

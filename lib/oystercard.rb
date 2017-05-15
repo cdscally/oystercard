@@ -29,6 +29,7 @@ class Oystercard
 
   def touch_out
     @in_journey = false
+    deduct(Fare::MIN_FARE)
     self
   end
 
