@@ -48,6 +48,13 @@ describe Oystercard do
 
   end
 
+  it { is_expected.to respond_to (:touch_in) }
 
+  #  describe '#touch_in' do
+  #
+  #    it should
+
+
+  # end
 
 end
