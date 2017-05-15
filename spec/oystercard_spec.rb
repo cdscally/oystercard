@@ -38,12 +38,12 @@ describe Oystercard do
 
   end
 
-  it { is_expected.to respond_to (:in_use) }
+  it { is_expected.to respond_to (:in_journey?) }
 
-  describe '#in_use' do
+  describe '#in_journey?' do
 
     it 'should return true or false' do
-      expect([true, false].include? subject.in_use).to eq true
+      expect([true, false].include? subject.in_journey?).to eq true
     end
 
   end
@@ -52,8 +52,8 @@ describe Oystercard do
 
   describe '#touch_in' do
 
-     it 'should change in_use attribute to true when called' do
-       expect(subject.touch_in.in_use).to eq true
+     it 'should change in_journey attribute to true when called' do
+       expect(subject.touch_in.in_journey?).to eq true
      end
 
   end
@@ -62,8 +62,8 @@ describe Oystercard do
 
   describe '#touch_out' do
 
-     it 'should change in_use attribute to false when called' do
-       expect(subject.touch_in.touch_out.in_use).to eq false
+     it 'should change in_journey attribute to false when called' do
+       expect(subject.touch_in.touch_out.in_journey?).to eq false
      end
 
   end
