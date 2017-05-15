@@ -1,3 +1,5 @@
+require_relative 'fare'
+
 class Oystercard
   attr_reader :balance
 
