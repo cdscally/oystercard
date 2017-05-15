@@ -53,7 +53,11 @@ describe Oystercard do
   describe '#touch_in' do
 
      it 'should change in_journey attribute to true when called' do
-       expect(subject.touch_in.in_journey?).to eq true
+       expect(subject.top_up(Fare::MIN_FARE).touch_in.in_journey?).to eq true
+     end
+
+     it 'should raise an error if the balance is below MIN_FARE' do
+       expect { subject.touch_in }.to raise_error "Balance below minimum fare. Please top-up."
      end
 
   end
@@ -63,7 +67,7 @@ describe Oystercard do
   describe '#touch_out' do
 
      it 'should change in_journey attribute to false when called' do
-       expect(subject.touch_in.touch_out.in_journey?).to eq false
+       expect(subject.top_up(Fare::MIN_FARE).touch_in.touch_out.in_journey?).to eq false
      end
 
   end
@@ -77,10 +81,10 @@ describe Oystercard do
     end
 
     it 'should return true if a new card is touched in' do
-      expect(subject.touch_in).to be_in_journey
+      expect(subject.top_up(Fare::MIN_FARE).touch_in).to be_in_journey
     end
     it 'should return false if a new card is touched in and touched out' do
-      expect(subject.touch_in.touch_out).not_to be_in_journey
+      expect(subject.top_up(Fare::MIN_FARE).touch_in.touch_out).not_to be_in_journey
     end
 
   end

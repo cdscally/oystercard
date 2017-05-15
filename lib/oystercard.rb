@@ -22,6 +22,7 @@ class Oystercard
   end
 
   def touch_in
+    fail "Balance below minimum fare. Please top-up." if balance < Fare::MIN_FARE
     @in_journey = true
     self
   end
