@@ -9,9 +9,9 @@ describe Oystercard do
     expect(subject.balance.class).to eq Integer
   end
 
-  describe '#top_up' do
+  it { is_expected.to respond_to(:top_up).with(1).argument }
 
-    it { is_expected.to respond_to(:top_up).with(1).argument }
+  describe '#top_up' do
 
     it 'should top up by a specified amount' do
       expect { subject.top_up(10) }.to change{ subject.balance }.by 10
@@ -27,4 +27,13 @@ describe Oystercard do
     expect(!!Oystercard::MAX_BALANCE).to eq true
   end
 
+  it { is_expected.to respond_to(:deduct).with(1).argument }
+
+  describe '#deduct' do
+
+    it 'should deduct by a specified amount' do
+      expect { subject.deduct(2) }.to change{ subject.balance }.by -2
+    end
+
+  end
 end
