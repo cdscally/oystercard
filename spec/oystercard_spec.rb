@@ -76,6 +76,13 @@ describe Oystercard do
       expect([true, false].include? subject.in_journey?).to eq true
     end
 
+    it 'should return true if a new card is touched in' do
+      expect(subject.touch_in).to be_in_journey
+    end
+    it 'should return false if a new card is touched in and touched out' do
+      expect(subject.touch_in.touch_out).not_to be_in_journey
+    end
+
   end
 
 end
