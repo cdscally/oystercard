@@ -2,9 +2,10 @@ require 'journey'
 
 describe Journey do
 
+  subject(:journey) { described_class.new(:station) }
+
   it 'should initialize with an entry station' do
-    journey = Journey.new("ABC")
-    expect(journey.entry_station).to eq "ABC"
+    expect(journey.entry_station).to eq :station
   end
 
   it 'should have a minimum fare' do
@@ -12,22 +13,17 @@ describe Journey do
   end
 
   it 'should finish a journey' do
-    journey = Journey.new("A")
-    expect(journey.complete_journey("B").completed_journey).to eq ({entry: "A", exit: "B"})
+    expect(journey.complete_journey(:station2).completed_journey).to eq ({entry: :station, exit: :station2})
   end
 
-  it 'should check for validity at #touch_in' do
-    journey = Journey.new(:station)
-    expect(journey).to be_in_journey
+  it 'should decide the fare' do
+    journey.complete_journey(:station2)
+    expect(journey.fare).to eq Journey::MIN_FARE
   end
 
-  # it 'should deduct penalty fare if in journey on touch in' do
-  #   expect(Oystercard.new.top_up(10).touch_in(:station).touch_in(:station).balance).to eq 4
-  # end
-
-  # it 'should deduct penalty fare if not in journey on touch out' do
-  #   expect(Oystercard.new.top_up(10).touch_out(:station).balance).to eq 4
-  # end
-
+  it 'should set the penalty fare when a journey is not valid' do
+    journey.complete_journey(nil)
+    expect(journey.fare).to eq Journey::PEN_FARE
+  end
 
 end

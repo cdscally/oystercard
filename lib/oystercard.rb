@@ -25,19 +25,16 @@ class Oystercard
   end
 
   def touch_out(station)
-    # touch_in(nil) if !@journey
-    # @journey = Journey.new(nil) if not @journey
+    touch_in(nil) if !@journey
     @journey.complete_journey(station)
     record_journey(@journey)
-    # @journey.completed_journey[:entry] == nil ? deduct(Journey::PEN_FARE) : deduct(Journey::MIN_FARE)
-    # @journey = nil
     reset_journey(@journey)
     self
   end
 
-  # def in_journey? #kill
-  #   !!@journey
-  # end
+  def in_journey?
+    !!@journey
+  end
 
   private
 

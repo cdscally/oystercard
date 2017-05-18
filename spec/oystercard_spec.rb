@@ -60,20 +60,30 @@ describe Oystercard do
 
   describe '#touch_out' do
 
+    before(:each) {card.top_up(90)}
      it 'should reset the journey when called' do
-       card = Oystercard.new.top_up(90).touch_in(:station).touch_out(:station)
+       card.touch_in(:station).touch_out(:station)
        expect(!!card.journey).to eq false
      end
 
      it 'should deduct the minimum fare' do
-       subject.top_up(Journey::MIN_FARE)
-       expect { subject.touch_in(:station).touch_out("Oval")}.to change{ subject.balance }.by (-Journey::MIN_FARE)
+       expect { card.touch_in(:station).touch_out("Oval")}.to change{ card.balance }.by (-Journey::MIN_FARE)
      end
 
      it "should create a journey hash when touching out" do
-       card = Oystercard.new.top_up(10).touch_in("Oval").touch_out("Bank")
+       card.touch_in("Oval").touch_out("Bank")
        expect(card.journeys[-1]).to eq ({ entry: "Oval", exit: "Bank" })
      end
+
+     it 'should complete a journey on touch out even if not touched in' do
+       card.touch_out(:station)
+       expect(card.journeys).not_to be_empty
+     end
+
+     it 'tests' do
+       card.touch_out(:station)
+     end
+
   end
 
 end

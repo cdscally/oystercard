@@ -12,21 +12,19 @@ class Journey
   end
 
   def complete_journey(station)
-    # @exit_station = station
-    # @completed_journey[:entry] = @entry_station
-    # @completed_journey[:exit] = station #@exit_station
     @completed_journey = {entry: @entry_station, exit: station}
     decide_fare
     self
   end
 
-  def in_journey?
-    !!self.entry_station #&& !completed_journey[:exit]
-  end
-
   def decide_fare
-    in_journey? && !completed_journey[:exit] ? @fare = PEN_FARE : @fare = MIN_FARE  
+    journey_is_not_valid? ? @fare = PEN_FARE : @fare = MIN_FARE
   end
 
+  private
+
+  def journey_is_not_valid?
+    completed_journey[:exit].nil? || completed_journey[:entry].nil?
+  end
 
 end
