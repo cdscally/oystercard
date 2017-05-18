@@ -19,18 +19,13 @@ class Oystercard
 
   def touch_in(station)
     fail "Balance below minimum fare. Please top-up." if balance < Journey::MIN_FARE
-    # @journey.complete_journey(nil)
-    #
-    # if @journey
-    #   deduct(Journey::PEN_FARE)  #<-- #fare
-    #   @journey.complete_journey(nil)  #<-- fine - calling a method
-    #   @journeys << @journey.completed_journey #<-- should provbably be called another method
-    # end
+    touch_out(nil) if @journey
     @journey = Journey.new(station)
     self
   end
 
   def touch_out(station)
+    # touch_in(nil) if !@journey
     # @journey = Journey.new(nil) if not @journey
     @journey.complete_journey(station)
     record_journey(@journey)

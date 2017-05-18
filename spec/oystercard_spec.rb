@@ -3,6 +3,7 @@ require 'oystercard'
 describe Oystercard do
 
   let(:station) { double(:station) }
+  subject(:card) { described_class.new }
 
   it 'has a balance' do
     expect(subject).to respond_to(:balance)
@@ -40,16 +41,19 @@ describe Oystercard do
   it { is_expected.to respond_to (:touch_in) }
 
   describe '#touch_in' do
+    it 'should raise an error if the balance is below MIN_FARE' do
+      expect { card.touch_in(:station) }.to raise_error "Balance below minimum fare. Please top-up."
+    end
 
-     it 'should initialize a journey when called' do
-       card = Oystercard.new.top_up(90).touch_in(:station)
-       expect(!!card.journey).to eq true
-     end
+    it 'should initialize a journey when called' do
+      card.top_up(90).touch_in(:station)
+      expect(!!card.journey).to eq true
+    end
 
-     it 'should raise an error if the balance is below MIN_FARE' do
-       expect { subject.touch_in(:station) }.to raise_error "Balance below minimum fare. Please top-up."
-     end
-
+    it 'should charge the minimum fare if the card is already touched in' do
+      card.top_up(90).touch_in(:station)
+      expect { card.touch_in(:station) }.to change { card.balance }.by (-Journey::PEN_FARE)
+    end
   end
 
   it { is_expected.to respond_to (:touch_out) }

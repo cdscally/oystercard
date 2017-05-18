@@ -21,11 +21,11 @@ class Journey
   end
 
   def in_journey?
-    !!self.entry_station
+    !!self.entry_station #&& !completed_journey[:exit]
   end
 
   def decide_fare
-    @fare = MIN_FARE
+    in_journey? && !completed_journey[:exit] ? @fare = PEN_FARE : @fare = MIN_FARE  
   end
 
 
