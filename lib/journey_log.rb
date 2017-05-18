@@ -6,16 +6,22 @@ class JourneyLog
   def initialize(journey_class)
     @journey_class = journey_class
     @journeys = []
+    @current_journey = {}
   end
 
   def start(station)
     @journey = Journey.new(station)
-    @journey.entry_station
+    current_journey[:entry]
   end
 
   def finish(station)
     @journey.complete_journey(station)
     @journey.completed_journey[:exit]
+  end
+
+  def current_journey
+    @journey = Journey.new(nil) unless @journey
+    @current_journey = {entry: @journey.entry_station, exit: nil}
   end
 
   # def get_journey_start
