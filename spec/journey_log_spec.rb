@@ -9,13 +9,13 @@ describe JourneyLog do
   end
 
   it 'should be able to start a new journey with a new entry station' do
-    journey_log.start(:entry_station)
-    expect(journey_log.get_journey_start).to eq :entry_station
+    # journey_log.start(:entry_station)
+    expect(journey_log.start(:entry_station)).to eq :entry_station
   end
 
   it 'should be able to finish a new journey with a new entry station' do
     journey_log.start(:entry_station)
-    journey_log.finish(:exit_station)
-    expect(journey_log.get_journey_finish).to eq :exit_station
+    # journey_log.finish(:exit_station)
+    expect(journey_log.finish(:exit_station)).to eq :exit_station
   end
 end
