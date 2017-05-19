@@ -19,7 +19,7 @@ describe JourneyLog do
     expect(journey_log.journeys).to eq [{entry: :station, exit: :station}]
   end
 
-  it 'can rest a journey' do
+  it 'can reset a journey' do
     journey_log.start(:station)
     journey_log.reset_journey
     expect(!!journey_log.journey).to eq false
