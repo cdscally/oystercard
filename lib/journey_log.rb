@@ -1,35 +1,39 @@
 require_relative 'journey'
 
 class JourneyLog
-  attr_reader :journeys, :journey_class
+  attr_reader :journey_class, :journey, :current_journey
 
-  def initialize(journey_class)
+  def initialize(journey_class: Journey)
     @journey_class = journey_class
     @journeys = []
-    @current_journey = {}
+    @current_journey = {entry: nil, exit: nil}
   end
 
   def start(station)
-    @journey = Journey.new(station)
-    current_journey[:entry]
+    @journey = journey_class.new(station)
   end
 
-  def finish(station)
-    @journey.complete_journey(station)
-    @journey.completed_journey[:exit]
+  def complete_journey(station)
+    @journey.exit_station = station
+    @current_journey = {entry: @journey.entry_station, exit: station}
+    record_journey
+    @journey.decide_fare
+    self
   end
 
-  def current_journey
-    @journey = Journey.new(nil) unless @journey
-    @current_journey = {entry: @journey.entry_station, exit: nil}
+  def journeys
+    @journeys.dup
   end
 
-  # def get_journey_start
-  #   @journey.entry_station
-  # end
-  #
-  # def get_journey_finish
-  #   @journey.completed_journey[:exit]
-  # end
+  def reset_journey
+    @journey = nil
+    @current_journey = {entry: nil, exit: nil}
+  end
+
+  private
+
+  def record_journey
+    @journeys << @current_journey
+  end
 
 end

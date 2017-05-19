@@ -13,10 +13,6 @@ describe Oystercard do
     expect(subject.balance.class).to eq Integer
   end
 
-  it "should initialize with an empty list of journeys" do
-    expect(subject.journeys).to eq []
-  end
-
   it { is_expected.to respond_to(:top_up).with(1).argument }
 
   describe '#top_up' do
@@ -47,7 +43,7 @@ describe Oystercard do
 
     it 'should initialize a journey when called' do
       card.top_up(90).touch_in(:station)
-      expect(!!card.journey).to eq true
+      expect(!!card.journey_log.journey).to eq true
     end
 
     it 'should charge the minimum fare if the card is already touched in' do
@@ -68,20 +64,6 @@ describe Oystercard do
 
      it 'should deduct the minimum fare' do
        expect { card.touch_in(:station).touch_out("Oval")}.to change{ card.balance }.by (-Journey::MIN_FARE)
-     end
-
-     it "should create a journey hash when touching out" do
-       card.touch_in("Oval").touch_out("Bank")
-       expect(card.journeys[-1]).to eq ({ entry: "Oval", exit: "Bank" })
-     end
-
-     it 'should complete a journey on touch out even if not touched in' do
-       card.touch_out(:station)
-       expect(card.journeys).not_to be_empty
-     end
-
-     it 'tests' do
-       card.touch_out(:station)
      end
 
   end

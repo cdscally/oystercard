@@ -12,17 +12,9 @@ describe Journey do
     expect(!!Journey::MIN_FARE).to eq true
   end
 
-  it 'should finish a journey' do
-    expect(journey.complete_journey(:station2).completed_journey).to eq ({entry: :station, exit: :station2})
-  end
 
   it 'should decide the fare' do
-    journey.complete_journey(:station2)
-    expect(journey.fare).to eq Journey::MIN_FARE
-  end
-
-  it 'should set the penalty fare when a journey is not valid' do
-    journey.complete_journey(nil)
+    journey.decide_fare
     expect(journey.fare).to eq Journey::PEN_FARE
   end
 

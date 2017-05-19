@@ -3,18 +3,13 @@ class Journey
   MIN_FARE = 1
   PEN_FARE = 6
 
-  attr_reader :entry_station, :exit_station, :completed_journey, :fare
+  attr_reader :entry_station, :fare
+  attr_accessor :exit_station
 
   def initialize(entry_station=nil)
     @entry_station = entry_station
-    @completed_journey = {entry: nil, exit: nil}
+    @exit_station = nil
     @fare = PEN_FARE
-  end
-
-  def complete_journey(station)
-    @completed_journey = {entry: @entry_station, exit: station}
-    decide_fare
-    self
   end
 
   def decide_fare
@@ -24,7 +19,7 @@ class Journey
   private
 
   def journey_is_not_valid?
-    completed_journey[:exit].nil? || completed_journey[:entry].nil?
+    (!entry_station || !exit_station)
   end
 
 end

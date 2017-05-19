@@ -2,24 +2,27 @@ require 'journey_log'
 
 describe JourneyLog do
 
-  subject(:journey_log) { described_class.new(:journey_class) }
+  subject(:journey_log) { described_class.new }
 
   it 'knows a log of journeys' do
     expect(journey_log.journeys).to eq []
   end
 
-  it 'should be able to start a new journey with a new entry station' do
-    # journey_log.start(:entry_station)
-    expect(journey_log.start(:entry_station)).to eq :entry_station
+  it 'can start a new journey' do
+    journey_log.start(:station)
+    expect(!!journey_log.journey).to eq true
   end
 
-  it 'should be able to finish a new journey with a new entry station' do
-    journey_log.start(:entry_station)
-    # journey_log.finish(:exit_station)
-    expect(journey_log.finish(:exit_station)).to eq :exit_station
+  it 'can complete a journey' do
+    journey_log.start(:station)
+    journey_log.complete_journey(:station)
+    expect(journey_log.journeys).to eq [{entry: :station, exit: :station}]
   end
 
-  it 'should create a new journey if current_journey is empty' do
-    expect(journey_log.current_journey[:entry]).to eq nil
+  it 'can rest a journey' do
+    journey_log.start(:station)
+    journey_log.reset_journey
+    expect(!!journey_log.journey).to eq false
   end
+
 end
